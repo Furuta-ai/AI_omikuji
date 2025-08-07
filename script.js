@@ -99,10 +99,6 @@ function drawFortune() {
             // カテゴリーがランダムの場合
             randomPrompt = getRandomPromptFromAll();
             categoryName = 'ランダム';
-        } else if (selectedTool === 'both') {
-            // ツールが「どちらでも」でカテゴリー指定ありの場合
-            randomPrompt = getRandomPromptFromCategory(selectedCategory);
-            categoryName = getCategoryDisplayName(selectedCategory);
         } else {
             // 指定された条件で選択
             const prompts = promptDatabase[selectedTool]?.[selectedCategory];
@@ -110,9 +106,9 @@ function drawFortune() {
                 randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
                 categoryName = getCategoryDisplayName(selectedCategory);
             } else {
-                // フォールバック
-                randomPrompt = getRandomPromptFromAll();
-                categoryName = 'ランダム';
+                // 指定されたカテゴリーがそのツールに存在しない場合は共通プロンプトから
+                randomPrompt = commonPrompts[Math.floor(Math.random() * commonPrompts.length)];
+                categoryName = getCategoryDisplayName(selectedCategory);
             }
         }
         
@@ -150,24 +146,6 @@ function getRandomPromptFromAll() {
     return allPrompts[Math.floor(Math.random() * allPrompts.length)];
 }
 
-// 特定のカテゴリーからプロンプトを選択（両方のツールから）
-function getRandomPromptFromCategory(category) {
-    const categoryPrompts = [];
-    
-    // 指定されたカテゴリーのプロンプトを両方のツールから集める
-    Object.values(promptDatabase).forEach(toolPrompts => {
-        if (toolPrompts[category]) {
-            categoryPrompts.push(...toolPrompts[category]);
-        }
-    });
-    
-    // カテゴリーのプロンプトがない場合は共通プロンプトから
-    if (categoryPrompts.length === 0) {
-        return commonPrompts[Math.floor(Math.random() * commonPrompts.length)];
-    }
-    
-    return categoryPrompts[Math.floor(Math.random() * categoryPrompts.length)];
-}
 
 // カテゴリー名を表示用に変換
 function getCategoryDisplayName(category) {
@@ -186,9 +164,7 @@ function getCategoryDisplayName(category) {
 function displayResult(prompt, category, tool) {
     promptText.textContent = prompt;
     
-    const toolName = tool === 'midjourney' ? 'Midjourney' : 
-                     tool === 'chatgpt' ? 'ChatGPT' : 
-                     '汎用';
+    const toolName = tool === 'midjourney' ? 'Midjourney' : 'ChatGPT';
     
     promptCategory.textContent = `カテゴリー: ${category} | 対象: ${toolName}`;
 }
