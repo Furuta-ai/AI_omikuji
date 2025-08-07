@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIプロンプトおみくじ</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="title">AIプロンプトおみくじ</h1>
+            <p class="subtitle">あなたにぴったりのプロンプトを見つけよう✨</p>
+        </header>
+
+        <main class="main-content">
+            <div class="selection-area">
+                <h2>どのAIツール用のプロンプトが欲しい？</h2>
+                
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="ai-tool" value="midjourney" checked>
+                        <span class="radio-custom"></span>
+                        Midjourney
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="ai-tool" value="chatgpt">
+                        <span class="radio-custom"></span>
+                        ChatGPT
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="ai-tool" value="both">
+                        <span class="radio-custom"></span>
+                        どちらでも
+                    </label>
+                </div>
+
+                <div class="category-select">
+                    <h3>カテゴリーを選択</h3>
+                    <select id="category-select">
+                        <option value="random">ランダム</option>
+                        <option value="art">アート・イラスト</option>
+                        <option value="photo">写真・リアル</option>
+                        <option value="design">デザイン</option>
+                        <option value="writing">文章・創作</option>
+                        <option value="business">ビジネス</option>
+                        <option value="fun">エンタメ・面白系</option>
+                    </select>
+                </div>
+
+                <button class="fortune-btn" id="fortune-btn">
+                    🎲 おみくじを引く
+                </button>
+            </div>
+
+            <div class="result-area" id="result-area" style="display: none;">
+                <div class="result-card">
+                    <h2>今日のプロンプト</h2>
+                    <div class="prompt-text" id="prompt-text"></div>
+                    <div class="prompt-category" id="prompt-category"></div>
+                    
+                    <div class="action-buttons">
+                        <button class="copy-btn" id="copy-btn">📋 コピー</button>
+                        <button class="twitter-btn" id="twitter-btn">🐦 Xでシェア</button>
+                        <button class="retry-btn" id="retry-btn">🔄 もう一回</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
